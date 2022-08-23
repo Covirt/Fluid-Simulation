@@ -12,8 +12,14 @@ void printUniverse(const vector<vector<int>> vector2D){
     }
 }
 
-void resetUniverse(vector<vector<int>>* vector2D){
-    cout << "You will be resetting the universe";
+void resetUniverse(vector<vector<int>>* p_vector2D){
+    for (vector<int>& line : *p_vector2D){
+        for (int& box : line){
+            box = 0;
+        }
+    }
+
+    cout << "The universe has been reset" << endl;
 }
 
 
@@ -22,9 +28,9 @@ void setUniverse(vector<vector<int>>* p_vector2D){
 
     cout << "x coordinate you wish to set: ";
     cin >> x;
-    cout << endl << "y coordinate you wish to set: ";
+    cout << "y coordinate you wish to set: ";
     cin >> y;
-    cout << endl << "value that you wish to set to: ";
+    cout << "value that you wish to set to: ";
     cin >> val;
 
     (*p_vector2D)[y][x] = val;
