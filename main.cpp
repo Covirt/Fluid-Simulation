@@ -17,19 +17,28 @@ void resetUniverse(vector<vector<int>>* vector2D){
 }
 
 
-void setUniverse(vector<vector<int>>* vector2D){
-    cout << "You will be setting the universe";
+void setUniverse(vector<vector<int>>* p_vector2D){
+    int x; int y; int val;
+
+    cout << "x coordinate you wish to set: ";
+    cin >> x;
+    cout << endl << "y coordinate you wish to set: ";
+    cin >> y;
+    cout << endl << "value that you wish to set to: ";
+    cin >> val;
+
+    (*p_vector2D)[y][x] = val;
 }
 
 
-void simulateUniverse(vector<vector<int>>* vector2D,const int numberOfIterations){
+void simulateUniverse(vector<vector<int>>* p_vector2D,const int numberOfIterations){
     cout << "You will be simulating the universe for " << numberOfIterations << " of iterations";
 }
 
 int main(){
     string choice;
 
-    vector<vector<int>> universe(20,vector<int>(20,0));
+    vector<vector<int>> universe(10,vector<int>(20,0));
     printUniverse(universe);
 
     while (true){
@@ -45,7 +54,7 @@ int main(){
             simulateUniverse(&universe,numberOfIterations);
             }
         else if (choice == "DISPLAY"){printUniverse(universe);}
-        else if (choice == "END"){exit;}
+        else if (choice == "END"){break;}
         else {cout << "Input not recognised, please try again" << endl;}
     }
 
