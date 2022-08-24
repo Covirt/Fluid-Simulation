@@ -12,21 +12,6 @@ void printUniverse(const vector<vector<double>> vector2D){
     }
 }
 
-double averageNeighboors(vector<vector<double>> matrix){
-	int x = 1; int y = 1;
-	int sum = 0;
-	
-	for (int newY = y-1; newY <= y+1; newY++){
-		for (int newX = x-1; newX <= x+1; newX++){
-			sum += matrix[newY][newX];
-		}
-	}
-	
-	sum -= matrix[y][x];
-	double average = 1.0*sum/9;
-	
-	return average;
-}
 
 void resetUniverse(vector<vector<double>>* p_vector2D){
     for (vector<double>& line : *p_vector2D){
@@ -57,6 +42,22 @@ void simulateUniverse(vector<vector<double>>* p_vector2D,const int numberOfItera
     cout << "You will be simulating the universe for " << numberOfIterations << " of iterations";
 }
 
+double averageNeighboors(vector<vector<double>> matrix){
+	int x = 1; int y = 1;
+	int sum = 0;
+	
+	for (int newY = y-1; newY <= y+1; newY++){
+		for (int newX = x-1; newX <= x+1; newX++){
+			sum += matrix[newY][newX];
+		}
+	}
+	
+	sum -= matrix[y][x];
+	double average = 1.0*sum/9;
+	
+	return average;
+}
+
 double averageNeighboors(vector<vector<double>> matrix, int x, int y){
     int sum = 0; int numberOfItems = 0;
     int yLOffset = 1; int yHOffset = 1;
@@ -83,7 +84,7 @@ double averageNeighboors(vector<vector<double>> matrix, int x, int y){
 
 vector<vector<double>> nextIteration(const vector<vector<double>> matrix){
     vector<vector<double>> nextMatrix(matrix.size(),vector<double>(matrix[1].size()));
-    
+
     for (int i=0; i<matrix.size(); i++){
         for (int j=0; j<matrix[1].size(); j++){
             nextMatrix[j][i] = averageNeighboors(matrix,i,j);
