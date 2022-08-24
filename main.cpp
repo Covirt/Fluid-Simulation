@@ -81,6 +81,18 @@ double averageNeighboors(vector<vector<double>> matrix, int x, int y){
     return 1.0*sum/numberOfItems; // return average
 }
 
+vector<vector<double>> nextIteration(const vector<vector<double>> matrix){
+    vector<vector<double>> nextMatrix(matrix.size(),vector<double>(matrix[1].size()));
+    
+    for (int i=0; i<matrix.size(); i++){
+        for (int j=0; j<matrix[1].size(); j++){
+            nextMatrix[j][i] = averageNeighboors(matrix,i,j);
+        }
+    }
+
+    return nextMatrix;
+}
+
 
 
 int main(){
