@@ -1,21 +1,30 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
+#include <iomanip>
 
 using namespace std;
 
-void printUniverse(const vector<vector<double>> vector2D){
-    for (const vector<double>& line : vector2D){
-        for (const double& box : line){
-            cout << box << ' ';
+float round1000(const float myFloat){
+    return round(myFloat*1000)/1000;
+}
+
+
+void printUniverse(const vector<vector<float>> vector2D){
+    for (const vector<float>& line : vector2D){
+        for (const float& box : line){
+            cout << fixed;
+            cout << setprecision(3);
+            cout << round1000(box) << "  ";
         }
         cout << endl;
     }
 }
 
 
-void resetUniverse(vector<vector<double>>* p_vector2D){
-    for (vector<double>& line : *p_vector2D){
-        for (double& box : line){
+void resetUniverse(vector<vector<float>>* p_vector2D){
+    for (vector<float>& line : *p_vector2D){
+        for (float& box : line){
             box = 0;
         }
     }
@@ -23,9 +32,13 @@ void resetUniverse(vector<vector<double>>* p_vector2D){
     cout << "The universe has been reset" << endl;
 }
 
+void setUniverse(vector<vector<float>>* p_vector2D, int x, int y, float val){
+    (*p_vector2D)[y][x] = val;
+}
 
-void setUniverse(vector<vector<double>>* p_vector2D){
-    int x; int y; int val;
+
+void setUniverse(vector<vector<float>>* p_vector2D){
+    int x; int y; float val;
 
     cout << "x coordinate you wish to set: ";
     cin >> x;
@@ -38,27 +51,11 @@ void setUniverse(vector<vector<double>>* p_vector2D){
 }
 
 
-void simulateUniverse(vector<vector<double>>* p_vector2D,const int numberOfIterations){
+void simulateUniverse(vector<vector<float>>* p_vector2D,const int numberOfIterations){
     cout << "You will be simulating the universe for " << numberOfIterations << " of iterations";
 }
 
-double averageNeighboors(vector<vector<double>> matrix){
-	int x = 1; int y = 1;
-	int sum = 0;
-	
-	for (int newY = y-1; newY <= y+1; newY++){
-		for (int newX = x-1; newX <= x+1; newX++){
-			sum += matrix[newY][newX];
-		}
-	}
-	
-	sum -= matrix[y][x];
-	double average = 1.0*sum/9;
-	
-	return average;
-}
-
-double averageNeighboors(vector<vector<double>> matrix, int x, int y){
+float averageNeighboors(vector<vector<float>> matrix, int x, int y){
     int sum = 0; int numberOfItems = 0;
     int yLOffset = 1; int yHOffset = 1;
     int xLOffset = 1; int xHOffset = 1;
@@ -76,18 +73,18 @@ double averageNeighboors(vector<vector<double>> matrix, int x, int y){
             numberOfItems ++;
         }
     }
-
+    
     sum -= matrix[y][x]; numberOfItems--; // remove the center cell
 
     return 1.0*sum/numberOfItems; // return average
 }
 
-vector<vector<double>> nextIteration(const vector<vector<double>> matrix){
-    vector<vector<double>> nextMatrix(matrix.size(),vector<double>(matrix[1].size()));
+vector<vector<float>> nextIteration(const vector<vector<float>> matrix){
+    vector<vector<float>> nextMatrix(matrix.size(),vector<float>(matrix[1].size()));
 
     for (int i=0; i<matrix.size(); i++){
         for (int j=0; j<matrix[1].size(); j++){
-            nextMatrix[j][i] = averageNeighboors(matrix,i,j);
+            nextMatrix[i][j] = averageNeighboors(matrix,j,i);
         }
     }
 
@@ -99,9 +96,28 @@ vector<vector<double>> nextIteration(const vector<vector<double>> matrix){
 int main(){
     string choice;
 
-    vector<vector<double>> universe(10,vector<double>(20,0));
+    vector<vector<float>> universe(4,vector<float>(4,0));
+
+    setUniverse(&universe, 0, 0, 9);
+
     printUniverse(universe);
 
+    cout << endl;
+    cout << endl;
+
+    universe = nextIteration(universe);
+    printUniverse(universe);
+
+    cout << endl;
+    cout << endl;
+
+    universe = nextIteration(universe);
+    printUniverse(universe);
+
+    cout << endl;
+
+
+/*
     while (true){
         cout << "What would you like to do? \n SET? \n RESET? \n SIMULATE? \n DISPLAY? \n END?" << endl;;
         cin >> choice;
@@ -118,6 +134,7 @@ int main(){
         else if (choice == "END"){break;}
         else {cout << "Input not recognised, please try again" << endl;}
     }
+    */
 
 
     return 0;
