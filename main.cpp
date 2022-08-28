@@ -56,17 +56,17 @@ void simulateUniverse(vector<vector<float>>* p_vector2D,const int numberOfIterat
 }
 
 float averageNeighboors(vector<vector<float>> matrix, int x, int y){
-    int sum = 0; int numberOfItems = 0;
-    int yLOffset = 1; int yHOffset = 1;
-    int xLOffset = 1; int xHOffset = 1;
 
     // the following if statements are made in order to prevent any seg faults
     // when calculating the average at the borders
+    int yLOffset = 1; int yHOffset = 1;
+    int xLOffset = 1; int xHOffset = 1;
     if (y == 0){yLOffset = 0;}
     if (y == (matrix.size()-1)){yHOffset = 0;}
     if (x == 0){xLOffset = 0;}
     if (x == (matrix[1].size()-1)){xHOffset = 0;}
 
+    float sum = 0; int numberOfItems = 0;
     for (int newY = y-yLOffset; newY <= y+yHOffset; newY++){
         for (int newX = x-xLOffset; newX <= x+xHOffset; newX++){
             sum += matrix[newY][newX];
