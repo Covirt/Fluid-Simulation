@@ -5,6 +5,19 @@
 
 using namespace std;
 
+//------------------------------------------------------------------------------
+
+float round1000(const float myFloat); // round a float to nearrest 0.001
+void printUniverse(const vector<vector<float>> vector2D);
+void resetUniverse(vector<vector<float>>* p_vector2D); // resets a matrix to all 0s
+void setUniverse(vector<vector<float>>* p_vector2D);
+void setUniverse(vector<vector<float>>* p_vector2D, int x, int y, float val);
+void simualteUniverse(vector<vector<float>>* p_vector2D, const int numberOfIterations); // averages all the cells of a table
+float averageNeighboors(vector<vector<float>> matrix, int x, int y); // averages a cell of a given matrix at x,y with the surrounding 8 cells
+vector<vector<float>> nextIteration(const vector<vector<float>> matrix); // runs averageNeighboors on all the cells of a matrix
+
+//------------------------------------------------------------------------------
+
 float round1000(const float myFloat){
     return round(myFloat*1000)/1000;
 }
@@ -52,7 +65,9 @@ void setUniverse(vector<vector<float>>* p_vector2D){
 
 
 void simulateUniverse(vector<vector<float>>* p_vector2D,const int numberOfIterations){
-    cout << "You will be simulating the universe for " << numberOfIterations << " of iterations";
+    for (int i=0; i<numberOfIterations; i++){
+        *p_vector2D = nextIteration(*p_vector2D);
+    }
 }
 
 float averageNeighboors(vector<vector<float>> matrix, int x, int y){
@@ -96,28 +111,8 @@ vector<vector<float>> nextIteration(const vector<vector<float>> matrix){
 int main(){
     string choice;
 
-    vector<vector<float>> universe(4,vector<float>(4,0));
+    vector<vector<float>> universe(10,vector<float>(20,0));
 
-    setUniverse(&universe, 0, 0, 9);
-
-    printUniverse(universe);
-
-    cout << endl;
-    cout << endl;
-
-    universe = nextIteration(universe);
-    printUniverse(universe);
-
-    cout << endl;
-    cout << endl;
-
-    universe = nextIteration(universe);
-    printUniverse(universe);
-
-    cout << endl;
-
-
-/*
     while (true){
         cout << "What would you like to do? \n SET? \n RESET? \n SIMULATE? \n DISPLAY? \n END?" << endl;;
         cin >> choice;
@@ -134,8 +129,18 @@ int main(){
         else if (choice == "END"){break;}
         else {cout << "Input not recognised, please try again" << endl;}
     }
-    */
+    
+/*
+// below is the "showcase" code
+    setUniverse(&universe, 5, 6, 9);
+    printUniverse(universe);
 
+    for (int i=0; i<100; i++){
+        cout << endl;
+        universe = nextIteration(universe);
+        printUniverse(universe);
+    }
+*/
 
     return 0;
 }
